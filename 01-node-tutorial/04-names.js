@@ -7,5 +7,3 @@ const rok = "Kawojue Raheem Olumuyiwa"
 const babe = "Mary Anuoluwapo"
 
 module.exports = {aa, rok, babe}
-
-console.log(module)

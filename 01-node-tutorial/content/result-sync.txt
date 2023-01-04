@@ -1,0 +1,4 @@
+Here is the result: 
+	1. This is the first text file
+	2. This is the second text file
+This is an appended text.

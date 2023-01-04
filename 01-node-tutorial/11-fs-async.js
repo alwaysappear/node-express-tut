@@ -1,4 +1,4 @@
-const {readFile, writeFile} = require('fs')
+const {readFile, writeFile, appendFile} = require('fs')
 const path = require('path')
 
 const resultPath = path.resolve(__dirname, 'content', 'result-async.txt')
@@ -22,6 +22,15 @@ readFile(
                 `Here are the results: \n\t1. ${first}\n\t2. ${second}`,
                 (err) => {
                     if (err) throw (err)
+
+                    appendFile(
+                        resultPath,
+                        '\n54 68 73 20 69 73 20 74 68 65 20 66 69',
+                        (err) => {
+                            if (err) throw (err)
+                            console.log('File Saved!')
+                        }
+                    )
                 }
             )
         }

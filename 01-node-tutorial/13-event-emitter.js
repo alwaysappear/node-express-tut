@@ -6,8 +6,8 @@ customEventEmitter.on('response', () => {
     console.log(`Data Recieved`)
 })
 
-customEventEmitter.on('response', () => {
-    console.log(`Another Data Recieved`)
+customEventEmitter.on('response', (x, y) => {
+    console.log(`Data Processed : ${x+y}`)
 })
 
 customEventEmitter.emit('response')

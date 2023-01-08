@@ -10,5 +10,5 @@ customEventEmitter.on('response', (x, y) => {
     console.log(`Data Processed : ${x+y}`)
 })
 
-customEventEmitter.emit('response')
+customEventEmitter.emit('response', 3, 4)
 

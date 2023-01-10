@@ -1,8 +1,9 @@
 const http = require('http')
 
-http.createServer((req, res) => {
+const server = http.createServer()
+
+server.on('request', (req, res) => {
     // console.log(req.method)
-    
     const url = req.url
     if (url === '/') {
         res.writeHead(200, {
@@ -27,6 +28,7 @@ http.createServer((req, res) => {
     }
     res.end()
 })
-.listen(1968, () => {
+
+server.listen(1968, () => {
     console.log("Listening on port : 1968...")
 })

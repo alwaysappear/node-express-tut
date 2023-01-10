@@ -1,6 +1,15 @@
 const http = require('http')
+const { createReadStream } = require('fs')
 
 const server = http.createServer()
+const homePage = createReadStream('../index.html', 'utf8')
+let result = ''
+
+homePage.on('data', data => {
+    result = data
+})
+
+homePage.emit('data')
 
 server.on('request', (req, res) => {
     // console.log(req.method)
@@ -9,7 +18,7 @@ server.on('request', (req, res) => {
         res.writeHead(200, {
             'Content-Type': 'text/html'
         })
-        res.write("<h1>Our Homepage.</h1>")
+        res.write(re)
     } else if (url === '/about') {
         res.writeHead(200, {
             'Content-Type': 'text/html'

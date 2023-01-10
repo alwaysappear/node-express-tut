@@ -18,7 +18,7 @@ server.on('request', (req, res) => {
         res.writeHead(200, {
             'Content-Type': 'text/html'
         })
-        res.write(re)
+        res.write(result)
     } else if (url === '/about') {
         res.writeHead(200, {
             'Content-Type': 'text/html'

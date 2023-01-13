@@ -20,8 +20,13 @@ app.get('/api/products', (req, res) => {
 })
 
 app.get('/api/product/:id', ({ params: { id } }, res) => {
-    const singleProduct = products.find(product => product.id == id)
-    res.status(200).json(singleProduct)
+    const singleProduct = products.find(product => product.id === Number(id))
+    
+    if (singleProduct) {
+        res.status(200).json(singleProduct)
+    } else {
+        res.status(404).json({message: 'Product not found!'})
+    }
 })
 
 app.listen(2003)

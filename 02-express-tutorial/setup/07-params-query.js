@@ -1,3 +1,4 @@
+const { application, query } = require('express')
 const { products } = require('../data')
 const express = require('express')
 const app = express()
@@ -19,7 +20,7 @@ app.get('/api/products', (req, res) => {
     res.status(200).json(newProducts)
 })
 
-app.get('/api/product/:id', ({ params: { id } }, res) => {
+app.get('/api/product/:id', ({ params: { id }}, res) => {
     const singleProduct = products.find(product => product.id === Number(id))
     
     if (singleProduct) {
@@ -28,5 +29,7 @@ app.get('/api/product/:id', ({ params: { id } }, res) => {
         res.status(404).json({message: 'Product not found!'})
     }
 })
+
+
 
 app.listen(2003)

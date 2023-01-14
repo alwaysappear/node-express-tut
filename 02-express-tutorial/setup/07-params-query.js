@@ -1,4 +1,3 @@
-const { application, query } = require('express')
 const { products } = require('../data')
 const express = require('express')
 const app = express()
@@ -13,10 +12,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/products', (req, res) => {
-    const newProducts = products.map(product => {
-        const {id, name, image} = product
-        return {id, name, image}
-    })
+    const newProducts = products.map(({id, name, image}) => ({id, name, image}))
     res.status(200).json(newProducts)
 })
 
@@ -29,7 +25,5 @@ app.get('/api/product/:id', ({ params: { id }}, res) => {
         res.status(404).json({message: 'Product not found!'})
     }
 })
-
-
 
 app.listen(2003)

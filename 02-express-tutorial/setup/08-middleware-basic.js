@@ -1,7 +1,8 @@
+const logger = require('../logger')
 const express = require('express')
 const app = express()
 
-app.get('/', (req, res) => {
+app.get('/', logger, (req, res) => {
     res.send('Homepage')
 })
 

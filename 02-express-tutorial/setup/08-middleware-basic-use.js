@@ -6,6 +6,7 @@ const app = express()
 app.use([authorize, logger])
 
 app.get('/', (req, res) => {
+    console.log(req.user) // gettting user from authorizer
     res.send('Homepage')
 })
 

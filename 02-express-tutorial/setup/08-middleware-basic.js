@@ -2,7 +2,9 @@ const logger = require('../logger')
 const express = require('express')
 const app = express()
 
-app.get('/', logger, (req, res) => {
+app.use(logger)
+
+app.get('/', (req, res) => {
     res.send('Homepage')
 })
 

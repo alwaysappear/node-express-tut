@@ -3,11 +3,13 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 
-app.use(morgan('tiny'))
+app.use(express.static('../methods-public'))
 
 app.get('/api/people', (req, res) => {
     res.status(200).json({success: true, data: people})
 })
+
+
 
 
 app.listen(2003, () => {

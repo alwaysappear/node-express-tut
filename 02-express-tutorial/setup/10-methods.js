@@ -30,6 +30,4 @@ app.post('api/people', (req, res) => {
     res.status(201).json({success: true, person: name})
 })
 
-app.listen(2003, () => {
-    console.log('Listening on port : 2003...')
-})
+app.listen(2003)

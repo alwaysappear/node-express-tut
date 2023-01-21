@@ -23,16 +23,18 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/api/people', (req, res) => {
-    const { name } = req.body
-    if (!name) {
-        return res.status(400).json({success: false, msg: 'Pls, provide name value'})
-    }
-    res.status(201).json({success: true, person: name})
+    console.log(req.body)
+    // if (name) {
+    //     return res.status(201).json({success: true, person: name})
+    // }
+    // res.status(400).json({success: false, msg: 'Pls, provide name value'})
 })
 
 app.put('/api/people/:id', (req, res) => {
     const { id } = req.params
     const { name } = req.body
+
+    console.log(req.params)
 
     console.log(id, name)
     res.send('Hello, World!')

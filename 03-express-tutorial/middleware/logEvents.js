@@ -7,7 +7,7 @@ const textFile = path.resolve(__dirname, '../logEvents.txt')
 const logger = (req, res, next) => {
     appendFile(
         textFile,
-        `id: ${uuid()}\n\tpath: \n\t\t${req.method} ${req.url}\n\n`,
+        `id: ${uuid()}\n\tpath: \n\t\t${res.statusCode} ${req.method} ${req.url}\n\n`,
         (err) => {
             if (err) throw new Error('Could not be resolved!')
         }

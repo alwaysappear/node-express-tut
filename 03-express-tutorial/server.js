@@ -35,8 +35,15 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, './views/index.html'))
 })
 
-app.get('*', (req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'))
+app.all('*', (req, res) => {
+    res.status(404)
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, 'views', '404.html'))
+    } else if (req.accepts('json')) {
+        res.json({error: '404 not found!'})
+    } else {
+        res.type('txt').send('404 not found!')
+    }
 })
 
 app.listen(PORT, () => {

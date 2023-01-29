@@ -2,7 +2,7 @@ const path = require('path')
 const { appendFile } = require('fs').promises
 const { v4: uuid } = require('uuid')
 
-const textFile = path.resolve(__dirname, '../loggEvents.txt')
+const textFile = path.resolve(__dirname, '../logEvents.txt')
 
 const logger = (req, res, next) => {
     appendFile(

@@ -31,7 +31,9 @@ app.use((err, req, res, next) => {
     res.status(500).send(err.message)
 })
 
-
+app.get('/', (req, res) => {
+    res.status(200).sendFile(path.resolve(__dirname, './views/index.html'))
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on PORT: ${PORT}`)

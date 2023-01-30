@@ -27,8 +27,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions)) // cross-origin resource share
 
+app.use(express.static(path.resolve(__dirname, './public')))
+app.use('/subdir', express.static(path.resolve(__dirname, './public')))
+
 app.use(express.json())
-app.use(express.static('./public'))
 app.use(express.urlencoded({
     extended: false
 }))

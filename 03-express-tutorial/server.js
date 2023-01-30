@@ -1,5 +1,6 @@
 const errorHandler = require('./middleware/errorHandler')
 const logger = require('./middleware/logEvents')
+const router = require('./routes/subdir')
 
 const express = require('express')
 const morgan = require('morgan')
@@ -35,7 +36,7 @@ app.use(express.urlencoded({
 app.use(errorHandler)
 app.use(logger)
 app.use(morgan('tiny'))
-
+app.use('/subdir', router)
 
 app.get('^/$|/index(.html)?', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, './views/index.html'))
@@ -46,7 +47,7 @@ app.get('/new-page(.html)?', (req, res) => {
 })
 
 app.get('/old-page(.html)?', (req, res) => {
-    res.redirect(301, '/new-page')
+    res.redirect(301, './new-page')
 })
 
 app.all('*', (req, res) => {

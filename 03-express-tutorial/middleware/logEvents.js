@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid')
 
 const textFile = path.resolve(__dirname, '../logEvents.txt')
 
-const logger = (req, res, next) => {
+const logger = async (req, res, next) => {
     appendFile(
         textFile,
         `id: ${uuid()}\n\tpath: \n\t\t${res.statusCode} ${req.method} ${req.url}\n\n`,

@@ -1,6 +1,5 @@
 const errorHandler = require('./middleware/errorHandler')
 const logger = require('./middleware/logEvents')
-const router = require('./routes/subdir')
 
 const express = require('express')
 const morgan = require('morgan')
@@ -25,10 +24,13 @@ const corsOptions = {
     optionsSuccessStatus: 200
 }
 
-app.use(cors(corsOptions)) // cross-origin resource share
+app.use(cors(corsOptions))
 
-app.use(express.static(path.resolve(__dirname, './public')))
-app.use('/subdir', express.static(path.resolve(__dirname, './public')))
+app.use('/', express.static(path.join(__dirname, '/public')))
+app.use('/subdir', express.static(path.join(__dirname, '/public')))
+
+app.use('/', require('./routes/root'))
+app.use('/subdir', require('./routes/subdir'))
 
 app.use(express.json())
 app.use(express.urlencoded({
@@ -38,19 +40,6 @@ app.use(express.urlencoded({
 app.use(errorHandler)
 app.use(logger)
 app.use(morgan('tiny'))
-app.use('/subdir', router)
-
-app.get('^/$|/index(.html)?', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, './views/index.html'))
-})
-
-app.get('/new-page(.html)?', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, './views/new-page.html'))
-})
-
-app.get('/old-page(.html)?', (req, res) => {
-    res.redirect(301, './new-page')
-})
 
 app.all('*', (req, res) => {
     res.status(404)

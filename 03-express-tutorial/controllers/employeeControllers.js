@@ -37,3 +37,5 @@ const deleteEmployee = ({
         employees: newEmployees
     })
 }
+
+module.exports = { getAllEmployees, getEmployee, deleteEmployee, addNewEmployee }

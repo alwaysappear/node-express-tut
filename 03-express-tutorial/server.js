@@ -1,5 +1,5 @@
 const errorHandler = require('./middleware/errorHandler')
-const corsOptions = require('./middleware/corsOptions')
+const corsOptions = require('./config/corsOptions')
 const logger = require('./middleware/logEvents')
 
 const express = require('express')
@@ -19,8 +19,8 @@ app.use(express.urlencoded({
 
 
 // custom middlewares 
-app.use(errorHandler)
 app.use(logger)
+app.use(errorHandler)
 app.use(morgan('tiny'))
 
 
@@ -40,7 +40,7 @@ app.all('*', (req, res) => {
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'))
     } else if (req.accepts('json')) {
-        res.json({ error: '404 not found!' })
+        res.json({ success: false, error: '404 not found!' })
     } else {
         res.type('txt').send('404 not found!')
     }

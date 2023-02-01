@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid')
 
 const data = {}
-data.employees = require('../data/employees.json')
+data.employees = require('../model/employees.json')
 
 const checkEmployeeFunc = (id) => {
     const employee = data.employees.find(emp => emp.id === parseInt(id))
@@ -75,7 +75,7 @@ const updateEmployee = (req, res) => {
     if (req.body.lastname) employee.lastname = req.body.lastname
     const filteredArray = data.employees.filter(employee => employee.id !== parseInt(req.body.id))
     const newEmployees = [...filteredArray, checkEmployee]
-    data.setEmployees(filteredArray.sort((a, b) => a.id > b.id ? 1 : a.id < b.id ? -1 : 0))
+    data.setEmployees(newEmployees.sort((a, b) => a.id > b.id ? 1 : a.id < b.id ? -1 : 0))
     res.json(data.employees)
 }
 

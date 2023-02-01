@@ -1,15 +1,11 @@
 const express = require('express')
+const router = express.Router()
+
 const {
     getAllEmployees, getEmployee,
     deleteEmployee, addNewEmployee,
     updateEmployee
 } = require('../../controllers/employeeControllers')
-
-const router = express.Router()
-
-const data = {}
-data.employees = require('../../data/employees.json')
-
 
 router.route('/')
     .get(getAllEmployees)

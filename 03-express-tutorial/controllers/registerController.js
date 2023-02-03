@@ -4,14 +4,14 @@ const { writeFile } = require('fs').promises
 
 const usersDB = {
     users: require('../model/users.json'),
-    setUsers: (data) => {
+    setUsers: function(data) {
         this.users = data
     }
 }
 
 const handleNewUser = async (req, res) => {
     const { user, pswd } = req.body
-    if (!user || !!pswd) return res.status(400).json({
+    if (!user || !pswd) return res.status(400).json({
         success: false,
         message: 'Username and Password are required.'
     })

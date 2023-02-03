@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node ./03-express-tutorial/server.js",
+    "dev": "nodemon ./03-express-tutorial/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alwaysappear/node-express-tut.git"

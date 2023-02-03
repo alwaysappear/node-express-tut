@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 2003
 
 // middlewares
 app.use(express.json())
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 app.use(express.urlencoded({
     extended: false
 }))
@@ -31,6 +31,7 @@ app.use('/subdir', express.static(path.join(__dirname, '/public')))
 
 // routes
 app.use('/', require('./routes/root'))
+app.use('/', require('./routes/register'))
 app.use('/subdir', require('./routes/subdir'))
 app.use('/employees', require('./routes/api/employees'))
 

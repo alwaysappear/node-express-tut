@@ -3,15 +3,11 @@ const { v4: uuid } = require('uuid')
 const data = {}
 data.employees = require('../model/employees.json')
 
-const checkEmployeeFunc = (id) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(id))
-    if (!employee) {
-        return {
-            success: true,
-            message: `Employee with ID: ${id} could not be found!`
-        }
+const notFound = (id) => {
+    return {
+        success: false,
+        message: `Employee with ID: ${id} could not be found!`
     }
-    return employee
 }
 
 const getAllEmployees = (req, res) => {
@@ -28,14 +24,15 @@ const getEmployee = ({
         id
     }
 }, res) => {
-    if (checkEmployeeFunc(id)) {
+    const employee = data.employees.find(emp => emp.id === parseInt(id))
+    if (!employee) {
         return res
-            .status(400)
-            .json(checkEmployeeFunc(id))
+                .status(400)
+                .json(notFound(id))
     }
     res
         .status(200)
-        .json(checkEmployeeFunc(id))
+        .json(employee)
 }
 
 const addNewEmployee = (req, res) => {
@@ -64,12 +61,12 @@ const deleteEmployee = ({
 }
 
 const updateEmployee = (req, res) => {
-    if (checkEmployeeFunc(id)) {
+    const employee = data.employees.find(emp => emp.id === parseInt(id))
+    if (!employee) {
         return res
             .status(400)
-            .json(checkEmployeeFunc(id))
+            .json(notFound(id))
     }
-    const checkEmployee = checkEmployeeFunc(id)
 
     if (req.body.firsname) employee.firsname = req.body.firsname
     if (req.body.lastname) employee.lastname = req.body.lastname

@@ -1,4 +1,8 @@
+require('dotenv').config()
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { resolve } = require('path')
+const { writeFile } = require('fs').promises
 const { usersDB } = require('../model/usersDB')
 
 const handleLogin = async (req, res) => {
@@ -18,11 +22,35 @@ const handleLogin = async (req, res) => {
     try {
         const match = await bcrypt.compare(pswd, userExists.password)
         if (match) {
+            const accessToken = jwt.sign(
+                { "username": userExists.username },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '30s' }
+            )
+
+            const refreshToken = jwt.sign( 
+                { "username": userExists.username },
+                process.env.REFRESH_TOKEN_SECRET,
+                { expiresIn: '1d' }
+            )
+
+            const omitUser = usersDB.users.filter(u => u.username !== userExists.username)
+            const currentUser = {
+                ...userExists,
+                refreshToken
+            }
+            usersDB.setUsers([...omitUser, currentUser])
+            await writeFile(
+                resolve(__dirname, '../model/users.json'),
+                JSON.stringify(usersDB.users)
+            )
+
+            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             return res.status(200).json({
-                succes: true,
-                message: `Welcome, ${userExists.username}!`
+                accessToken
             })
         }
+
         res.status(401).json({
             success: false,
             message: "Incorrect password!"

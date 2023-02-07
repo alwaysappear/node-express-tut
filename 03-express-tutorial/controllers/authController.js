@@ -14,10 +14,7 @@ const handleLogin = async (req, res) => {
         message: 'Username and Password are required.'
     })
 
-    if (!userExists) return res.status(401).json({
-        succes: false,
-        message: "Username does not exists."
-    })
+    if (!userExists) return res.sendStatus(409)
 
     try {
         const match = await bcrypt.compare(pswd, userExists.password)
@@ -45,7 +42,14 @@ const handleLogin = async (req, res) => {
                 JSON.stringify(usersDB.users)
             )
 
-            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+            res.cookie(
+                'jwt',
+                refreshToken,
+                {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000
+                }
+            )
             return res.status(200).json({
                 accessToken
             })

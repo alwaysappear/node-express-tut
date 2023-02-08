@@ -14,7 +14,7 @@ const handleLogin = async (req, res) => {
         message: 'Username and Password are required.'
     })
 
-    if (!userExists) return res.sendStatus(409)
+    if (!userExists) return res.sendStatus(409) // Conflict
 
     try {
         const match = await bcrypt.compare(pswd, userExists.password)
@@ -47,7 +47,7 @@ const handleLogin = async (req, res) => {
                 refreshToken,
                 {
                     httpOnly: true,
-                    maxAge: 24 * 60 * 60 * 1000
+                    maxAge: 7 * 24 * 60 * 60 * 1000
                 }
             )
             return res.status(200).json({

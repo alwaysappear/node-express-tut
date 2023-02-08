@@ -37,6 +37,7 @@ app.use('/', require('./routes/root'))
 app.use('/', require('./routes/auth'))
 app.use('/', require('./routes/register'))
 app.use('/subdir', require('./routes/subdir'))
+app.use('/logout', require('./routes/logout'))
 app.use('/refresh', require('./routes/refresh'))
 app.use('/employees', require('./routes/api/employees'))
 

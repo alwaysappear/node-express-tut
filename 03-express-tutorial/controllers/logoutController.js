@@ -12,7 +12,7 @@ const handleLogout = async (req, res) => {
             'jwt',
             {
                 httpOnly: true,
-                // maxAge: 7 * 24 * 60 * 60 * 1000
+                maxAge: 7 * 24 * 60 * 60 * 1000
             }
         )
         res.sendStatus(204)
@@ -27,7 +27,7 @@ const handleLogout = async (req, res) => {
     res.clearCookie(
         'jwt', {
             httpOnly: true,
-            // maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000
         }
     )
     res.sendStatus(204)

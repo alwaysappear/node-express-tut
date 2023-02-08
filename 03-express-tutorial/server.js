@@ -1,6 +1,8 @@
 const errorHandler = require('./middleware/errorHandler')
 const corsOptions = require('./config/corsOptions')
+const verifyJWT = require('./middleware/verifyJWT')
 const logger = require('./middleware/logEvents')
+const cookieParser = require('cookie-parser')
 
 const express = require('express')
 const morgan = require('morgan')
@@ -16,6 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: false
 }))
+app.use(cookieParser())
 
 
 // custom middlewares 
@@ -34,6 +37,7 @@ app.use('/', require('./routes/root'))
 app.use('/', require('./routes/auth'))
 app.use('/', require('./routes/register'))
 app.use('/subdir', require('./routes/subdir'))
+app.use('/refresh', require('./routes/refresh'))
 app.use('/employees', require('./routes/api/employees'))
 
 

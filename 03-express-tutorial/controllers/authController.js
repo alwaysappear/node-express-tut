@@ -31,12 +31,8 @@ const handleLogin = async (req, res) => {
                 { expiresIn: '1d' }
             )
 
-            const omitUser = usersDB.users.filter(u => u.username !== userExists.username)
-            const currentUser = {
-                ...userExists,
-                refreshToken
-            }
-            usersDB.setUsers([...omitUser, currentUser])
+            const updateUser = usersDB.users.map(newUser => newUser.username === userExists.username ? { ...newUser, refreshToken }: newUser)
+            usersDB.setUsers(updateUser)
             await writeFile(
                 resolve(__dirname, '../model/users.json'),
                 JSON.stringify(usersDB.users)

@@ -17,9 +17,8 @@ const handleLogout = async (req, res) => {
         )
         res.sendStatus(204)
     }
-    const otherUsers = usersDB.users.filter(user => user.refreshToken !== userExists.refreshToken)
-    const currentUser = { ...userExists, refreshToken: '' }
-    usersDB.setUsers([...otherUsers, currentUser])
+    const updateUser =  usersDB.users.map(user => user.refreshToken === userExists.refreshToken ? {...user, refreshToken: ""}: user)
+    usersDB.setUsers(updateUser)
     await writeFile(
         resolve(__dirname, '../model/users.json'),
         JSON.stringify(usersDB.users)

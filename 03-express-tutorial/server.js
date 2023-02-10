@@ -1,6 +1,5 @@
+const alllowedOrigins = require('./config/allowedOrigins')
 const errorHandler = require('./middleware/errorHandler')
-const corsOptions = require('./config/corsOptions')
-const verifyJWT = require('./middleware/verifyJWT')
 const logger = require('./middleware/logEvents')
 const cookieParser = require('cookie-parser')
 
@@ -8,13 +7,17 @@ const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
+const allowedOrigins = require('./config/allowedOrigins')
 
 const app = express()
 const PORT = process.env.PORT || 2003
 
 // middlewares
 app.use(express.json())
-// app.use(cors(corsOptions))
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST']
+}))
 app.use(express.urlencoded({
     extended: false
 }))

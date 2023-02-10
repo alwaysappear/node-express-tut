@@ -7,7 +7,6 @@ const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
-const allowedOrigins = require('./config/allowedOrigins')
 
 const app = express()
 const PORT = process.env.PORT || 2003

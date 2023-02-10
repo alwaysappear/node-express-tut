@@ -31,7 +31,7 @@ const handleLogin = async (req, res) => {
                 { expiresIn: '1d' }
             )
 
-            const updateUser = usersDB.users.map(newUser => newUser.username === userExists.username ? { ...newUser, refreshToken }: newUser)
+            const updateUser = usersDB.users.map(newUser => newUser.username === userExists.username ? { ...newUser, refreshToken } : newUser)
             usersDB.setUsers(updateUser)
             await writeFile(
                 resolve(__dirname, '../model/users.json'),
@@ -43,6 +43,8 @@ const handleLogin = async (req, res) => {
                 refreshToken,
                 {
                     httpOnly: true,
+                    sameSite: 'None',
+                    secure: true,
                     maxAge: 7 * 24 * 60 * 60 * 1000
                 }
             )

@@ -1,4 +1,4 @@
-const alllowedOrigins = require('./config/allowedOrigins')
+const allowedOrigins = require('./config/allowedOrigins')
 const errorHandler = require('./middleware/errorHandler')
 const logger = require('./middleware/logEvents')
 const cookieParser = require('cookie-parser')

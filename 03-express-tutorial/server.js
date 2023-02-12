@@ -4,12 +4,15 @@ const allowedOrigins = require('./config/allowedOrigins')
 const errorHandler = require('./middleware/errorHandler')
 const logger = require('./middleware/logEvents')
 const cookieParser = require('cookie-parser')
+const connectDB = require('./config/dbConn')
 
+const mongoose = require('mongoose')
 const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
 
+connectDB()
 const app = express()
 const PORT = process.env.PORT || 2003
 
@@ -57,6 +60,9 @@ app.all('*', (req, res) => {
     }
 })
 
-app.listen(PORT, () => {
-    console.log(`Listening on PORT: ${PORT}`)
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB!')
+    app.listen(PORT, () => {
+        console.log(`Listening on PORT: ${PORT}!`)
+    })
 })

@@ -1,7 +1,5 @@
-const path = require('path')
 const bcrypt = require('bcrypt')
-const { writeFile } = require('fs').promises
-const { usersDB } = require('../model/usersDB')
+const User = require('../model/User')
 
 const handleNewUser = async (req, res) => {
     const { user, pswd } = req.body
@@ -10,7 +8,7 @@ const handleNewUser = async (req, res) => {
         message: 'Username and Password are required.'
     })
 
-    const exists = usersDB.users.find(u => u.username === user)
+    const exists = await User.findOne({ username: user }).exec()
     if (exists) return res.status(409).json({
         success: false,
         message: 'Username already exists.'
@@ -18,16 +16,11 @@ const handleNewUser = async (req, res) => {
 
     try {
         const hashedPswd = await bcrypt.hash(pswd, 10)
-        const newUser = {
+        await User.create({
             "username": user,
-            "roles": { "User": 2001 },
             "password": hashedPswd
-        }
-        usersDB.setUsers([...usersDB.users, newUser])
-        await writeFile(
-            path.resolve(__dirname, '../model/users.json'),
-            JSON.stringify(usersDB.users)
-        )
+        })
+
         res.status(201).json({
             succes: true,
             message: `New User: ${user} was created.`

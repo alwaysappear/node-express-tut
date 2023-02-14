@@ -14,13 +14,13 @@ const cors = require('cors')
 
 connectDB()
 const app = express()
-const PORT = process.env.PORT || 2003
+const PORT = process.env.PORT
 
 // middlewares
 app.use(express.json())
 app.use(cors({
     origin: allowedOrigins,
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST', 'DELETE', 'PUT']
 }))
 app.use(express.urlencoded({
     extended: false

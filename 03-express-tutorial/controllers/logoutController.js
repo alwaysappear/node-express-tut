@@ -2,8 +2,7 @@ const User = require('../model/User')
 
 const clearCookie = {
     httpOnly: true,
-    sameSite: 'None',
-} // secure - in production
+} // secure - in production, sameSite: 'None'
 
 const handleLogout = async (req, res) => {
     const cookies = req.cookies

@@ -1,12 +1,10 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { resolve } = require('path')
-const { writeFile } = require('fs').promises
-const { usersDB } = require('../model/usersDB')
+const User = require('../model/User')
 
 const handleLogin = async (req, res) => {
     const { user, pswd } = req.body
-    const userExists = usersDB.users.find(u => u.username === user)
+    const userExists = await User.findOne({ username: user }).exec()
 
     if (!user || !pswd) return res.status(400).json({
         success: false,
@@ -37,22 +35,16 @@ const handleLogin = async (req, res) => {
                 { expiresIn: '1d' }
             )
 
-            const updateUser = usersDB.users.map(newUser => newUser.username === userExists.username ? { ...newUser, refreshToken } : newUser)
-            usersDB.setUsers(updateUser)
-            await writeFile(
-                resolve(__dirname, '../model/users.json'),
-                JSON.stringify(usersDB.users)
-            )
-
+            userExists.refreshToken = refreshToken
+            await userExists.save()
             res.cookie(
                 'jwt',
                 refreshToken,
                 {
                     httpOnly: true,
                     sameSite: 'None',
-                    secure: true,
                     maxAge: 7 * 24 * 60 * 60 * 1000
-                }
+                } // secure - in production
             )
             return res.status(200).json({
                 accessToken

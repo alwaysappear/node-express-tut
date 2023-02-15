@@ -17,8 +17,8 @@ const handleNewUser = async (req, res) => {
     try {
         const hashedPswd = await bcrypt.hash(pswd, 10)
         await User.create({
-            "username": user,
-            "password": hashedPswd
+            username: user,
+            password: hashedPswd
         })
 
         res.status(201).json({
